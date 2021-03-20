@@ -5,7 +5,7 @@
 
 typedef struct avltree avltree;
 
-avltree *avltree_create(void);
+avltree *avltree_create(int);
 void avltree_delete(avltree *);
 
 void avltree_insert(avltree *, int , int);
