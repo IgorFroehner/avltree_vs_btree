@@ -5,14 +5,15 @@
 
 typedef struct avltree avltree;
 
-avltree *avltree_create(int);
+avltree *avltree_create(void);
 void avltree_delete(avltree *);
 
-void avltree_insert(avltree *, int , int);
+void avltree_insert(avltree *t, int k, int v);
 void avltree_remove(avltree *t, int k);
 
 int avltree_height(avltree *);
 int avltree_size(avltree *);
+int avltree_iterations(avltree *);
 
 void avltree_print(avltree *);
 

@@ -9,7 +9,8 @@ typedef struct node {
 
 struct btree {
     node *root;
-    int order;  
+    int order;
+    int cont;
 };
 
 static node *node_create(btree *t){
@@ -29,6 +30,7 @@ static node *node_create(btree *t){
 btree *btree_create(int order) {
     btree *res = malloc(sizeof(btree));
     res->order = order;
+    res->cont = 0;
     res->root = node_create(res);
     return res;
 }
@@ -78,7 +80,7 @@ static node *findNode(btree *t, int key) {
 static void addKeyNode(node *n, node *new, int key) {
     int i = binarySearch(n, key);
 
-    for (int j=n->size-1; i>=i; j--){
+    for (int j=n->size-1; j>=i; j--){
         n->keys[j+1] = n->keys[j];
         n->keys[j+2] = n->keys[j+1];
     }
@@ -88,7 +90,7 @@ static void addKeyNode(node *n, node *new, int key) {
     n->size++;
 }
 
-static int overflow (btree *t, node *n) {
+static int overflow(btree *t, node *n) {
     return n->size > t->order*2;
 }
 
@@ -110,13 +112,55 @@ static node *splitNode(btree *t, node* n){
     return new;
 }
 
-void btree_insert(btree *, int );
-void btree_remove(btree *t, int k);
+static void addKeyRecursive(btree *t, node *n, node *new, int key){
+    addKeyNode(n, new, key);
+    t->cont++;
+
+    if (overflow(t, n)) {
+        int promoted = n->keys[t->order];
+        node *new = splitNode(t, n);
+
+        if (n->father == NULL) {
+            node *father = node_create(t);
+            father->children[0] = n;
+            addKeyNode(father, new, promoted);
+
+            n->father = father;
+            new->father = father;
+            t->root = father;
+        }else
+            addKeyRecursive(t, n->father, new, promoted);
+    }
+}
+
+int btree_iterations(btree *t){
+    return t->cont;
+}
+
+void btree_insert(btree *t, int k){
+    node *n = findNode(t, k);
+
+    addKeyRecursive(t, n, NULL, k);
+}
+
+static void node_print(node *n){
+    if (n) {
+        for (int i = 0; i<n->size; i++) {
+            node_print(n->children[i]);
+            printf("%d ", n->keys[i]);
+        }
+        node_print(n->children[n->size]);
+    }
+}
+
+void btree_print(btree *t){
+    node_print(t->root);
+}
+
 
 int btree_height(btree *);
 int btree_size(btree *);
 
-void btree_print(btree *);
 
 bool btree_has(btree *, int );
 int btree_get(btree *, int );
@@ -126,3 +170,7 @@ void btree_largura(btree *, void (*f)(int, int));
 void btree_inorder(btree *, void (*f)(int, int));
 void btree_postorder(btree *, void (*f)(int, int));
 void btree_preorder(btree *, void (*f)(int, int));
+
+// codigo do professor
+
+

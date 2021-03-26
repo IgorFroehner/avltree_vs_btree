@@ -15,6 +15,7 @@ typedef struct node {
 
 struct avltree {
     node *root;
+    int cont;
 };
 
 // ------------create-----------------
@@ -22,6 +23,7 @@ struct avltree {
 avltree *avltree_create(void){
     avltree *t = malloc(sizeof(avltree));
     t->root = NULL;
+    t->cont = 0;
     return t;
 }
 
@@ -81,8 +83,9 @@ static node *right_rotate(node *n) {
     return b;
 }
 
-static node *node_insert(node *n, int k, int v){
+static node *node_insert(node *n, int k, int v, avltree *t){
     if (n!=NULL){
+        t->cont++;
         // vê se o cara que a gente tá já não é a chave que estamos procurando
         if (n->key==k){
             n->value = v;
@@ -91,9 +94,9 @@ static node *node_insert(node *n, int k, int v){
 
         // se for menor vamos pra esquerda se não vamos pra direita
         if (k<n->key){
-            n->left = node_insert(n->left, k,  v);
+            n->left = node_insert(n->left, k,  v, t);
         } else {
-            n->right = node_insert(n->right, k, v);
+            n->right = node_insert(n->right, k, v, t);
         }
 
         int factor = node_height(n->left) - node_height(n->right);
@@ -130,7 +133,11 @@ static node *node_insert(node *n, int k, int v){
 }
 
 void avltree_insert(avltree *t, int k, int v){
-    t->root = node_insert(t->root, k, v);
+    t->root = node_insert(t->root, k, v, t);
+}
+
+int avltree_iterations(avltree *t){
+    return t->cont;
 }
 
 // -------------REMOVE----------

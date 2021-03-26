@@ -18,7 +18,8 @@ int main() {
         avltree_insert(t, x, x);
     }
 
-    avltree_print(t);
+    // avltree_print(t);
+    printf("%d\n", avltree_iterations(t));
 
     avltree_delete(t);
 
