@@ -53,9 +53,12 @@ void btree_delete(btree *t) {
     node_delete(t->root, t->order);
 }
 
-static int binarySearch(node *n, int key) {
+static int binary_search(node *n, int key, btree *t) {
     int start = 0, end = n->size-1, mid;
     while (start <= end) {
+        
+        t->cont++;
+
         mid = (start+end)/2;
         if (n->keys[mid]==key) return mid;
         if (n->keys[mid]>key) end = mid-1;
@@ -68,7 +71,10 @@ static node *findNode(btree *t, int key) {
     node *n = t->root;
 
     while (n) {
-        int i = binarySearch(n, key);
+
+        t->cont++;
+
+        int i = binary_search(n, key, t);
 
         if (n->children[i]==NULL) return n;
         n = n->children[i];
@@ -77,10 +83,13 @@ static node *findNode(btree *t, int key) {
     return NULL;
 }
 
-static void addKeyNode(node *n, node *new, int key) {
-    int i = binarySearch(n, key);
+static void addKeyNode(node *n, node *new, int key, btree *t) {
+    int i = binary_search(n, key, t);
 
     for (int j=n->size-1; j>=i; j--){
+
+        t->cont++;
+
         n->keys[j+1] = n->keys[j];
         n->keys[j+2] = n->keys[j+1];
     }
@@ -100,6 +109,9 @@ static node *splitNode(btree *t, node* n){
     new->father = n->father;
 
     for (int i=mid+1; i<n->size; i++) {
+        
+        t->cont++;
+
         new->children[new->size] = n->children[i];
         new->keys[new->size] = n->keys[i];
         if (n->children[n->size] != NULL) new->children[new->size]->father = new;
@@ -113,7 +125,7 @@ static node *splitNode(btree *t, node* n){
 }
 
 static void addKeyRecursive(btree *t, node *n, node *new, int key){
-    addKeyNode(n, new, key);
+    addKeyNode(n, new, key, t);
     t->cont++;
 
     if (overflow(t, n)) {
@@ -121,9 +133,12 @@ static void addKeyRecursive(btree *t, node *n, node *new, int key){
         node *new = splitNode(t, n);
 
         if (n->father == NULL) {
+            
+            t->cont++;
+
             node *father = node_create(t);
             father->children[0] = n;
-            addKeyNode(father, new, promoted);
+            addKeyNode(father, new, promoted, t);
 
             n->father = father;
             new->father = father;
@@ -158,19 +173,4 @@ void btree_print(btree *t){
 }
 
 
-int btree_height(btree *);
-int btree_size(btree *);
-
-
-bool btree_has(btree *, int );
-int btree_get(btree *, int );
-
-void btree_largura(btree *, void (*f)(int, int));
-
-void btree_inorder(btree *, void (*f)(int, int));
-void btree_postorder(btree *, void (*f)(int, int));
-void btree_preorder(btree *, void (*f)(int, int));
-
-// codigo do professor
-
-
+// do professor deu 61

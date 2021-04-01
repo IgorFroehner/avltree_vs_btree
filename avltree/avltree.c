@@ -57,7 +57,8 @@ int avltree_height(avltree *t){
 
 // -------------- INSERT ---------------
 
-static node *left_rotate(node *n){
+static node *left_rotate(node *n, avltree *t){
+    t->cont++;
     node *b = n->right;
     node *y = b->left;
 
@@ -70,7 +71,8 @@ static node *left_rotate(node *n){
     return b;
 }
 
-static node *right_rotate(node *n) {
+static node *right_rotate(node *n, avltree *t) {
+    t->cont++;
     node *b = n->left;
     node *y = b->right;
 
@@ -105,23 +107,25 @@ static node *node_insert(node *n, int k, int v, avltree *t){
 
         if (factor < -1){
             if (k > n->right->key)
-                n = left_rotate(n);
+                n = left_rotate(n, t);
             else{
-                n->right = right_rotate(n->right);
-                n = left_rotate(n);
+                n->right = right_rotate(n->right, t);
+                n = left_rotate(n, t);
             }
         }else
         if (factor > 1){
             if (k > n->right->key){
-                n->left = left_rotate(n->left);
-                n = right_rotate(n);
+                n->left = left_rotate(n->left, t);
+                n = right_rotate(n, t);
             }else
-                n = right_rotate(n);
+                n = right_rotate(n, t);
         }
 
         return n;
     } else{
         // se chegamos em uma parte em que não existe nodo é aqui que ele vai
+        t->cont++;
+
         n = malloc(sizeof(node));
         n->key = k;
         n->left = NULL;
@@ -140,80 +144,6 @@ int avltree_iterations(avltree *t){
     return t->cont;
 }
 
-// -------------REMOVE----------
-
-static node *min_node(node *n){
-    node *i = n;
-    while(i->left!=NULL)
-        i = n->left;
-    return i;
-}
-
-static node *node_remove(node *n, int k){
-    if (n==NULL) return n;
-
-    if (k<n->key){
-        n->left = node_remove(n->left, k);
-    }else
-    if (k>n->key){
-        n->right = node_remove(n->right, k);
-    }else{
-        // tamo no nodo pra ser deletado
-
-        // sem filho
-        if ((n->left==NULL) || (n->right==NULL)){
-            node *aux = n->left!=NULL ? n->left : n->right;
-            
-            if (aux==NULL){
-                node_delete(n);
-                n = NULL;
-            }else{
-                *n = *aux;
-                free(aux);
-            }
-        } else {
-            // menor cara na direita
-            node *temp = min_node(n->right);
-
-            n->key = temp->key;
-            n->value = temp->value;
-
-            n->right = node_remove(n->right, temp->key);
-        }
-    }
-    // Se não foi ESSE nó que removemos, podemos precisar balancear!
-    if(n != NULL) {
-        // Podemos ter desbalanceado, então verificamos os fatores!
-        int factor = node_height(n->left) - node_height(n->right);
-
-        if(factor < -1) {
-            // Pendendo pra direita!
-            if(node_factor(n->right) <= 0) {
-                // Caso A: right right!
-                n = left_rotate(n);
-            } else {
-                // Caso B: right left!
-                n->right = right_rotate(n->right);
-                n = left_rotate(n);
-            }
-        } else if(factor > 1) {
-            // Pendendo pra esquerda!
-            if(node_factor(n->left) < 0) {
-                // Caso C: left right!
-                n->left = left_rotate(n->left);
-                n = right_rotate(n);
-            } else {
-                // Caso D: left left!
-                n = right_rotate(n);
-            }
-        }
-    }
-    return n;
-}
-
-void avltree_remove(avltree *t, int k){
-    t->root = node_remove(t->root, k);
-}
 
 // ------------- SIZE ---------
 
@@ -226,61 +156,6 @@ int avltree_size(avltree *t){
     if (t->root!=NULL)
         return node_size(t->root);
     return 0;
-}
-
-// ------------ HAS -------------
-
-bool avltree_has(avltree *t, int k){
-    node *it = t->root;
-    while (it!=NULL){
-        if (it->key == k) return true;
-        if (it->key > k) it = it->left;
-        else it = it->right;
-    }
-    return false;
-}
-
-
-// ----------- INORDER ---------------
-
-static void node_inorder(node *n, void (*f)(int, int)){
-    if (n!=NULL){
-        node_inorder(n->left, f);
-        f(n->key, n->value);
-        node_inorder(n->right, f);
-    }
-}
-
-void avltree_inorder(avltree *t, void (*f)(int, int)){
-    node_inorder(t->root, f);
-}
-
-// ------------ POSTORDER ---------------
-
-static void node_postorder(node *n, void (*f)(int, int)){
-    if (n!=NULL){
-        node_postorder(n->left, f);
-        node_postorder(n->right, f);
-        f(n->key, n->value);
-    }
-}
-
-void avltree_postorder(avltree *t, void (*f)(int, int)){
-    node_postorder(t->root, f);
-}
-
-// ------------ PREORDER ----------------
-
-static void node_preorder(node *n, void (*f)(int, int)){
-    if (n!=NULL){
-        f(n->key, n->value);
-        node_preorder(n->left, f);
-        node_postorder(n->right, f);
-    }
-}
-
-void avltree_preorder(avltree *t, void (*f)(int, int)){
-    node_preorder(t->root, f);
 }
 
 
@@ -320,27 +195,5 @@ static int node_get(node *n, int k) {
 
 int avltree_get(avltree *t, int k) {
     return node_get(t->root, k);
-}
-
-// ------------------ Percorre Largura --------------
-
-static void node_largura(node *n, void (*f)(int, int)) {
-    if (n){
-        if (n->left){
-            f(n->left->key, n->left->value);
-        }
-        if (n->right){
-            f(n->right->key, n->right->value);
-        }
-        node_largura(n->left, f);
-        node_largura(n->right, f);
-    }
-}
-
-void avltree_largura(avltree *t, void (*f)(int, int)){
-    if (t->root){
-        f(t->root->key, t->root->value);
-        node_largura(t->root, f);
-    }
 }
 

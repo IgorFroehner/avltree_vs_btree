@@ -18,8 +18,13 @@ int main() {
         avltree_insert(t, x, x);
     }
 
-    // avltree_print(t);
-    printf("%d\n", avltree_iterations(t));
+    FILE *f = fopen("../outs_piorcaso/out_avltree", "a");
+
+    fprintf(f, "%d\n", avltree_iterations(t));
+    avltree_print(t);
+
+    fclose(f);
+    // printf();
 
     avltree_delete(t);
 

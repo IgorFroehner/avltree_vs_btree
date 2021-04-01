@@ -15,9 +15,6 @@ void btree_insert(btree *, int );
 
 int btree_iterations(btree *t);
 
-int btree_height(btree *);
-int btree_size(btree *);
-
 void btree_print(btree *);
 
 

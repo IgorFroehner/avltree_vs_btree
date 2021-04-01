@@ -17,13 +17,5 @@ int avltree_iterations(avltree *);
 
 void avltree_print(avltree *);
 
-bool avltree_has(avltree *, int );
-int avltree_get(avltree *, int );
-
-void avltree_largura(avltree *, void (*f)(int, int));
-
-void avltree_inorder(avltree *, void (*f)(int, int));
-void avltree_postorder(avltree *, void (*f)(int, int));
-void avltree_preorder(avltree *, void (*f)(int, int));
 
 #endif

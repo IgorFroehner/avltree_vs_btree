@@ -5,7 +5,7 @@
 
 int main() {
 
-    btree* t = btree_create(1);
+    btree* t = btree_create(25);
 
     int n, x;
     scanf("%d", &n);
@@ -14,7 +14,12 @@ int main() {
         btree_insert(t, x);
     }
 
-    // btree_print(t);
-    printf("%d\n", btree_iterations(t));
+    FILE *f = fopen("../outs_piorcaso/out_btree", "a");
+
+    fprintf(f, "%d\n", btree_iterations(t));
+
+    fclose(f);
+
+    // btree_delete(t);
     
 }
