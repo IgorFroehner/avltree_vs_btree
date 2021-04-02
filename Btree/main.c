@@ -5,7 +5,7 @@
 
 int main() {
 
-    btree* t = btree_create(25);
+    btree* t = btree_create(100);
 
     int n, x;
     scanf("%d", &n);
@@ -14,11 +14,15 @@ int main() {
         btree_insert(t, x);
     }
 
-    FILE *f = fopen("../outs_piorcaso/out_btree", "a");
+    printf("%d\n", btree_iterations(t));
 
-    fprintf(f, "%d\n", btree_iterations(t));
+    // FILE *f = fopen("./outs_piorcaso/out_btree", "a");
+    // fprintf(f, "%d\n", btree_iterations(t));
+    // fclose(f);
 
-    fclose(f);
+    FILE *f_rand = fopen("./outs_piorcaso/out_btree_rand", "a");
+    fprintf(f_rand, "%d\n", btree_iterations(t));
+    fclose(f_rand);
 
     // btree_delete(t);
     
