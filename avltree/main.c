@@ -18,14 +18,15 @@ int main() {
         avltree_insert(t, x, x);
     }
 
-    FILE *f = fopen("../outs_piorcaso/out_avltree", "a");
+    // FILE *f = fopen("./outs_piorcaso/out_avltree", "a");
+    // fprintf(f, "%d\n", avltree_iterations(t));
+    // fclose(f);
 
-    fprintf(f, "%d\n", avltree_iterations(t));
-    avltree_print(t);
-
-    fclose(f);
+    FILE *f_rand = fopen("./outs_piorcaso/out_avltree_rand", "a");
+    fprintf(f_rand, "%d\n", avltree_iterations(t));
+    fclose(f_rand);
     // printf();
 
-    avltree_delete(t);
+    // avltree_delete(t);
 
 }
