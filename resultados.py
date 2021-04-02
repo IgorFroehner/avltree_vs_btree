@@ -13,7 +13,7 @@ out_avltree_rand = open(f'outs_piorcaso/out_avltree_rand', 'w').close()
 out_btree_rand = open(f'outs_piorcaso/out_btree_rand', 'w').close()
 
 
-for k in range(1):
+for k in range(10):
 
     # out_avltree_rand = open(f'./outs_piorcaso/out_avltree_rand', 'a')
     out_btree_rand = open(f'./outs_piorcaso/out_btree_rand', 'a')
@@ -24,10 +24,9 @@ for k in range(1):
     # out_avltree_rand.close()
     out_btree_rand.close()
 
-    for i in range(10):
+    for i in range(n):
         os.system(f'./avltree/avl < ./rand_ins{k}/in{i} > out_avl')
         os.system(f'./Btree/btree < ./rand_ins{k}/in{i} > out_b')
-        print(i)
     
 
 # out_avltree = open('outs_piorcaso/out_avltree', 'w').close()
