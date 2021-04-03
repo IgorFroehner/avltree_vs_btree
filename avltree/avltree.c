@@ -106,7 +106,7 @@ static node *node_insert(node *n, int k, int v, avltree *t){
         n->height = max(node_height(n->right), node_height(n->left))+1;
 
         if (factor < -1){
-            if (n->right && k > n->right->key)
+            if (k > n->right->key)
                 n = left_rotate(n, t);
             else{
                 n->right = right_rotate(n->right, t);
@@ -114,7 +114,7 @@ static node *node_insert(node *n, int k, int v, avltree *t){
             }
         }else
         if (factor > 1){
-            if (n->right && k > n->right->key){
+            if (k > n->left->key){
                 n->left = left_rotate(n->left, t);
                 n = right_rotate(n, t);
             }else
