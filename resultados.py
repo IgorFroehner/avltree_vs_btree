@@ -15,13 +15,13 @@ out_btree_rand = open(f'outs_piorcaso/out_btree_rand', 'w').close()
 
 for k in range(10):
 
-    # out_avltree_rand = open(f'./outs_piorcaso/out_avltree_rand', 'a')
+    out_avltree_rand = open(f'./outs_piorcaso/out_avltree_rand', 'a')
     out_btree_rand = open(f'./outs_piorcaso/out_btree_rand', 'a')
 
-    # out_avltree_rand.write(f'{k+1}\n')
-    out_btree_rand.write(f'{k+1}\n')
+    out_avltree_rand.write(f'\n{k+1}\n')
+    out_btree_rand.write(f'\n{k+1}\n')
 
-    # out_avltree_rand.close()
+    out_avltree_rand.close()
     out_btree_rand.close()
 
     for i in range(n):
