@@ -114,7 +114,7 @@ static node *node_insert(node *n, int k, int v, avltree *t){
             }
         }else
         if (factor > 1){
-            if (k > n->right->key){
+            if (k > n->left->key){
                 n->left = left_rotate(n->left, t);
                 n = right_rotate(n, t);
             }else
