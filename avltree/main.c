@@ -10,7 +10,8 @@ int main() {
 
     avltree *t = avltree_create();
 
-    int n, x;
+    int n, x, type;
+    scanf("%i", &type); // seleciona o tipo de input, 1 para ordenado e 2 para randômico
     scanf("%i", &n);
 
     for (int i=0; i<n; i++){
@@ -18,15 +19,20 @@ int main() {
         avltree_insert(t, x, x);
     }
 
-    // FILE *f = fopen("./outs_piorcaso/out_avltree", "a");
-    // fprintf(f, "%d\n", avltree_iterations(t));
-    // fclose(f);
+    // avltree_print(t);
 
-    FILE *f_rand = fopen("./outs_piorcaso/out_avltree_rand", "a");
-    fprintf(f_rand, "%d\n", avltree_iterations(t));
-    fclose(f_rand);
-    // printf();
+    if(type == 1) { // salvar o output para números ordenados
+        FILE *f = fopen("./outs_piorcaso/out_avltree", "a");
+        fprintf(f, "%d\n", avltree_iterations(t));
+        fclose(f);
+    }
 
-    // avltree_delete(t);
+    else if (type == 2) { // salvar o output para números randômicos
+        FILE *f_rand = fopen("./outs_piorcaso/out_avltree_rand", "a");
+        fprintf(f_rand, "%d\n", avltree_iterations(t));
+        fclose(f_rand);
+    }
+
+    avltree_delete(t);
 
 }
