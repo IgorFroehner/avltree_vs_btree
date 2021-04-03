@@ -16,3 +16,9 @@ Para visualizar o resultado gerado por este trabalho, você precisa executar ess
     $~ python3 gerador.py
 
     $~ python3 resultados.py
+
+Esses comandos gerarão:
+    - pastas rand_ins{i} | 0 <= i < 10 e para cada pasta, serão geradas k entradas in{k} | 0 <= k < 100, contendo 10 pastas com 100 entradas
+    - pasta ins, dentro da pasta, serão geradas k entradas in{k} | 0 <= k < 100
+
+As entradas geradas serão usadas para comparar a AVL Tree e a B Tree.
