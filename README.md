@@ -12,6 +12,7 @@ Para conseguir rodar este projeto, você precisa ter:
 
 
 Para visualizar o resultado gerado por este trabalho, você precisa executar esses comandos em seu terminal, em sequência:
+    
     $~ python3 gerador.py
 
     $~ python3 resultados.py
