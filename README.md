@@ -22,3 +22,9 @@ Esses comandos gerarão:
 - pasta ins, dentro da pasta, serão geradas k entradas in{k} | 0 <= k < 100
 
 As entradas geradas serão usadas para comparar a AVL Tree e a B Tree.
+
+Com as entradas geradas, também haverá 4 pastas de saída em outs_piorcaso:
+- out_avltree: Quantidade de iterações para geração da árvore AVL a partir das entradas ordenadas;
+- out_avltree_rand: Quantidade de iterações para geração da árvore AVL a partir das entradas randômicas;
+- out_btree: Quantidade de iterações para geração da árvore B a partir das entradas ordenadas;
+- out_btree_rand: Quantidade de iterações para geração da árvore B a partir das entradas randômicas;
