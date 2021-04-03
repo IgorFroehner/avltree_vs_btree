@@ -4,7 +4,7 @@ O objetivo deste trabalho consiste em analisar a complexidade algorítmica das o
 
 O resultado final do experimento deve ser exibido em dois gráfico de linha (um para o pior caso e outro para o caso médio), onde o eixo X representa o tamanho dos conjuntos de dados (1 a 100) e o eixo Y representa o esforço computacional das operações (adição de chaves e balanceamento). O gráfico deve apresentar 2 linhas, as quais representam as respectivas operações para cada estrutura de dados avaliada.
 
-# Getting Started
+# Exemplo de uso
 
 Para conseguir rodar este projeto, você precisa ter:
 - suporte para compiladores C (como GCC). 
