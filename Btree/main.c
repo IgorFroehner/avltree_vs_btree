@@ -5,7 +5,7 @@
 
 int main() {
 
-    btree* t = btree_create(100);
+    btree* t = btree_create(10);
 
     int n, x, type;
     scanf("%d", &type); // seleciona o tipo de input, 1 para ordenado e 2 para randômico
