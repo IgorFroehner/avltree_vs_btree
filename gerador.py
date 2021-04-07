@@ -1,10 +1,12 @@
 import os, sys, random
+from pathlib import Path
 
 num_pastas = 10
 n = 100
 
 # cria pastas de ins para números ordenados
 for i in range(n):
+    Path(f'./ins').mkdir(parents=True, exist_ok=True)
     f = open(f'./ins/in{i}', 'w')
 
     f.write(f'{1}\n')
@@ -16,6 +18,9 @@ for i in range(n):
 
 # cria pastas de ins para números randomicos
 for k in range(num_pastas):
+
+    Path(f'./rand_ins{k}').mkdir(parents=True, exist_ok=True)
+
     for i in range(n):
         f_rand = open(f'./rand_ins{k}/in{i}', 'w')
 
