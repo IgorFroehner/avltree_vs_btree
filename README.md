@@ -28,3 +28,12 @@ Com as entradas geradas, também haverá 4 pastas de saída em outs_piorcaso:
 - out_avltree_rand: Quantidade de iterações para geração da árvore AVL a partir das entradas randômicas;
 - out_btree: Quantidade de iterações para geração da árvore B a partir das entradas ordenadas;
 - out_btree_rand: Quantidade de iterações para geração da árvore B a partir das entradas randômicas;
+
+# Resultados Obtidos
+Diante disso, os resultados obtido desta análise se encontram nos gráficos abaixo, que representam o crescimento do número de iterações realizadas na operação de inserção por tamanho de entrada, para o pior caso, que seriam números em sequência crescente ou decrescente e para o caso médio, representado pela média dos resultados obtidos para dez casos aleatórios produzidos. A ordem utilizada na árvore B para obter tais resultados foi 10.
+
+![gráfico para números sequenciais](/plot/Números_em_sequência.png)
+
+![gráfico para números sequenciais](/plot/Números_Randômicos.png)
+
+Com esses resultados, observamos que a árvore b, chamada nos gráficos de btree apresenta um desempenho pior, e como suas complexidades de tempo são as mesmas, atribuímos esse resultado a uma necessidade de calibrar a ordem da árvore b de acordo com as entradas, e entendemos que ela se comportaria melhor em casos com um número mais elevado de dados sendo inseridos e em uma situação em que sua ordem está o mais adequada possível.
